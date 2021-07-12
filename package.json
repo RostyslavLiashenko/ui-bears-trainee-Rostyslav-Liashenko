@@ -2,14 +2,19 @@
   "name": "trello_app",
   "version": "0.1.0",
   "private": true,
+  "author": "Ros",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "@mdi/font": "5.9.55",
     "core-js": "^3.6.5",
+    "roboto-fontface": "*",
+    "vee-validate": "^4.4.6",
     "vue": "^3.0.0",
+    "vuetify": "^3.0.0-alpha.0",
     "vuex": "^4.0.0-0"
   },
   "devDependencies": {
@@ -20,7 +25,10 @@
     "@vue/compiler-sfc": "^3.0.0",
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
-    "eslint-plugin-vue": "^7.0.0"
+    "eslint-plugin-vue": "^7.0.0",
+    "sass": "~1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-vuetify": "~2.4.1"
   },
   "eslintConfig": {
     "root": true,
@@ -41,14 +49,13 @@
     "last 2 versions",
     "not dead"
   ],
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RostyslavLiashenko/ui-bears-trainee-Rostyslav-Liashenko.git"
-  },
-  "author": "Ros",
-  "license": "ISC",
   "bugs": {
     "url": "https://github.com/RostyslavLiashenko/ui-bears-trainee-Rostyslav-Liashenko/issues"
   },
-  "homepage": "https://github.com/RostyslavLiashenko/ui-bears-trainee-Rostyslav-Liashenko#readme"
+  "homepage": "https://github.com/RostyslavLiashenko/ui-bears-trainee-Rostyslav-Liashenko#readme",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RostyslavLiashenko/ui-bears-trainee-Rostyslav-Liashenko.git"
+  }
 }
