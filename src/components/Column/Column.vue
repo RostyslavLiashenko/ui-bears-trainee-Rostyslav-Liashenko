@@ -1,10 +1,10 @@
 <template>
-  <v-card width="240" min-width="240" color="#699" class="mr-3 d-inline-block clHeight">
-    <div class="columnTitleBlock">
-      <v-card-title class="text-md-body-1 pb-0 text-break title" v-if="isTitleShow" @click="isTitleShow = false">
+  <v-card width="240" min-width="240" color="#699" class="mr-3 d-inline-block" style="height: fit-content;">
+    <div class="title__container">
+      <v-card-title class="text-md-body-1 pb-0 text-break" style="cursor: pointer;" v-if="isTitleShow" @click="isTitleShow = false">
         {{ column.title }}
       </v-card-title>
-      <input class="inputTitle" v-focus v-else-if="!isTitleShow" v-model="title" type="text" @blur="addNewTitle"/>
+      <input class="title__container__input" v-focus v-else-if="!isTitleShow" v-model="title" type="text" @blur="addNewTitle"/>
     </div>
     <v-card-actions class="pt-0" v-if="!isCardFormShow">
       <v-btn text class="text-md-body-2 text-lowercase" @click="isCardFormShow = true">
@@ -28,9 +28,6 @@ import CardForm from './Cards/CardForm'
 
 export default {
   name: "Column",
-  props: {
-    column: Object
-  },
   components: {
     Cards,
     CardForm
@@ -41,6 +38,9 @@ export default {
       isCardFormShow: false,
       title: this.column.title
     }
+  },
+  props: {
+    column: Object
   },
   methods: {
     ...mapMutations(["updateTitle", "removeColumn", "createCard"]),
@@ -75,23 +75,17 @@ export default {
 </script>
 
 <style scoped>
-.inputTitle {
+.title__container__input {
   margin: 5px 5px 1px 5px;
   padding: 6px;
   border: 2px solid red;
   border-radius: 5px;
 }
-.title {
-  cursor: pointer;
-}
-.columnTitleBlock {
+.title__container {
   border: 2px solid darkkhaki;
   border-radius: 5px 5px 0 0;
   background: rgba(249,255,250,0.88);
   color: #333;
   margin-bottom: 5px;
-}
-.clHeight {
-  height: fit-content;
 }
 </style>

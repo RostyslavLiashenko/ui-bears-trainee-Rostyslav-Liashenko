@@ -12,8 +12,8 @@
         <v-icon>mdi-magnify</v-icon>
       </v-btn>
 
-      <v-app-bar-title class="text-white trelloText">
-        <v-icon class="home">mdi-domain</v-icon>
+      <v-app-bar-title class="text-white trello__text">
+        <v-icon class="home pb-sm-1">mdi-domain</v-icon>
         Trello
       </v-app-bar-title>
 
@@ -39,15 +39,12 @@ export default {
 </script>
 
 <style scoped>
-.trelloText {
+.trello__text {
   position: relative;
   left: 37%;
   cursor: pointer;
 }
-.trelloText:hover {
+.trello__text:hover {
   color: #333 !important;
-}
-.home {
-  padding-bottom: 2px;
 }
 </style>

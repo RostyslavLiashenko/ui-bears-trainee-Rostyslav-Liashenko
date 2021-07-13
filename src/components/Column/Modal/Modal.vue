@@ -1,10 +1,10 @@
 <template>
-  <v-card class="modalWindow">
-    <v-card-title v-if="isCardTitleShow" class="text-h5 grey lighten-2 modalTitle mb-2"
+  <v-card class="modal">
+    <v-card-title v-if="isCardTitleShow" class="text-h5 grey lighten-2 mb-2 modal__title"
                   @click="isCardTitleShow = false">
       {{ card.newCard.cardTitle }}
     </v-card-title>
-    <input class="inputTitle" v-focus v-else-if="!isCardTitleShow" v-model="modalTitle" type="text"
+    <input class="modal__input__title" v-focus v-else-if="!isCardTitleShow" v-model="modalTitle" type="text"
            @blur="addNewTitle"/>
 
     <template v-if="isDescriptionShow">
@@ -40,12 +40,9 @@ import DescriptionForm from './DescriptionForm'
 import {mapMutations} from 'vuex'
 
 export default {
+  name: "Modal",
   components: {
     DescriptionForm
-  },
-  name: "Modal",
-  props: {
-    card: Object
   },
   data() {
     return {
@@ -53,6 +50,9 @@ export default {
       isCardTitleShow: true,
       modalTitle: this.card.newCard.cardTitle
     }
+  },
+  props: {
+    card: Object
   },
   methods: {
     ...mapMutations(["addDesc", "updateCardTitle"]),
@@ -78,7 +78,7 @@ export default {
 </script>
 
 <style scoped>
-.modalWindow {
+.modal {
   width: 400px;
   z-index: 10;
   position: fixed;
@@ -86,14 +86,14 @@ export default {
   top: 30%;
 }
 
-.modalTitle {
+.modal__title {
   background: rgba(243, 250, 250, 0.78) !important;
   border: 2px solid darkkhaki;
   cursor: pointer;
   font-size: 1.1em;
 }
 
-.inputTitle {
+.modal__input__title {
   font-size: 1.1em;
   margin: 10px 5px 10px 10px;
   padding: 6px;

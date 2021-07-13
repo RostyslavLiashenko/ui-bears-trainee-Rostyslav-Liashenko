@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <Header/>
-    <v-main class="mainBox">
-      <div class="formContainer">
+    <v-main class="main">
+      <div class="main__form">
         <ColumnBtn :isColumnShow="isColumnShow" @showColumn="showColumn"/>
         <ColumnForm v-click-outside="hideColumn" v-if="isColumnShow" :isColumnShow="isColumnShow" @hideColumn="hideColumn"/>
       </div>
@@ -48,10 +48,10 @@ export default {
 html {
   overflow-y: auto;
 }
-.formContainer {
+.main__form {
   margin-bottom: 30px;
 }
-.mainBox {
+.main {
   padding: 30px 0 10px 20px !important;
   background: url("assets/pexels-pok-rie-132037.jpg") no-repeat;
   background-size: cover;

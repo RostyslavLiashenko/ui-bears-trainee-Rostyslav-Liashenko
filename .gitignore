@@ -2,7 +2,6 @@
 node_modules
 /dist
 
-
 # local env files
 .env.local
 .env.*.local
@@ -21,20 +20,11 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
-# Игнорировать каталог node_modules
-node_modules/
 
 # Игнорирование логов
 logs
 *.log
 
-# Игнорирование каталога со сборкой проекта
-/dist
-
 # Игнорирование файла содержащий переменные окружения
 .env
 
-# Игнорирование файлов специфичных для IDE
-.idea/
-.vscode/
-*.sw*

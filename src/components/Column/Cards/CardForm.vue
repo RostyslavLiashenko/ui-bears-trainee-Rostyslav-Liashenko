@@ -1,6 +1,6 @@
 <template>
-  <Form @submit="addCard" class="form">
-    <Field v-focus name="cardTitle" class="input" placeholder="type a title" v-model="cardTitle"/>
+  <Form @submit="addCard" class="form__card">
+    <Field v-focus name="cardTitle" class="form__card__input" placeholder="type a title" v-model="cardTitle"/>
     <v-btn text class="text-md-body-2 text-lowercase mr-5 mt-2 pr-2" type="submit">
       new card
       <v-icon class="ml-2" size="x-small" left>mdi-pencil</v-icon>
@@ -13,11 +13,11 @@
 import {Form, Field} from 'vee-validate'
 
 export default {
+  name: "CardForm",
   components: {
     Form,
     Field,
   },
-  name: "CardForm",
   data() {
     return {
       cardTitle: ''
@@ -42,14 +42,14 @@ export default {
 </script>
 
 <style scoped>
-.input {
+.form__card {
+  padding: 2px 5px 5px 10px;
+}
+.form__card__input {
   padding: 6px;
   border: 2px solid #fff;
   border-radius: 5px;
   color: #fff;
-}
-.form {
-  padding: 2px 5px 5px 10px;
 }
 ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
   color: #f3faf7;

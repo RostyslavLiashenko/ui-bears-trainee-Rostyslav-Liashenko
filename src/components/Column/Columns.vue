@@ -1,5 +1,5 @@
 <template>
-  <div class="columnsWrapper">
+  <div class="columns__container">
     <Column v-for="column in allColumns" :key="column.id" :column="column" />
   </div>
 </template>
@@ -16,7 +16,7 @@ export default {
 </script>
 
 <style>
-.columnsWrapper {
+.columns__container {
   overflow-x: auto;
   overflow-y: hidden;
   display: flex;

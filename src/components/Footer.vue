@@ -1,7 +1,7 @@
 <template>
   <v-footer dark padless fixed bottom max-height="40px" width="100%" class="footer">
     <v-card class="flex" flat tile>
-      <v-card-title class="teal">
+      <v-card-title class="teal footer__card__title">
         <span class="text-white text-md-subtitle-1">{{ new Date().getFullYear() }} — Trello application</span>
         <v-spacer></v-spacer>
         <v-btn v-for="icon in icons" :key="icon" max-width="30px" max-height="30px" rounded="pill"
@@ -34,7 +34,7 @@ export default {
   justify-content: center;
   background: #699;
 }
-.teal {
+.footer__card__title {
   background-color: #699;
   padding: 0;
 }
