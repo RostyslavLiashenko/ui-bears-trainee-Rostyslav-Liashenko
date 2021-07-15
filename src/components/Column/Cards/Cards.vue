@@ -7,16 +7,12 @@
 <script>
 import Card from "./Card";
 export default {
+  name: "Cards",
   components: {
     Card
   },
-  name: "Cards",
   props: {
     cards: Array
   }
 }
 </script>
-
-<style scoped>
-
-</style>
