@@ -2,7 +2,7 @@
   <v-card class="modal">
     <v-card-title v-if="isCardTitleShow" class="text-h5 grey lighten-2 mb-2 modal__title"
                   @click="isCardTitleShow = false">
-      {{ card.newCard.cardTitle }}
+      {{ card.cardTitle }}
     </v-card-title>
     <input class="modal__input__title" v-focus v-else-if="!isCardTitleShow" v-model="modalTitle" type="text"
            @blur="addNewTitle"/>
@@ -12,7 +12,7 @@
         Card description:
       </v-card-header>
       <v-card-text class="text-break text-md-body-2 pt-1" max-width="200">
-        {{ card.newCard.description }}
+        {{ card.description }}
       </v-card-text>
       <v-container class="flex-row">
         <v-btn size="x-small" icon color="#699" @click="isDescriptionShow=false">
@@ -20,7 +20,7 @@
         </v-btn>
       </v-container>
     </template>
-    <DescriptionForm v-else-if="!isDescriptionShow" :desc="card.newCard.description"
+    <DescriptionForm v-else-if="!isDescriptionShow" :desc="card.description"
                      @closeDescForm="isDescriptionShow=true"
                      @addDescription="addDescription"/>
 
@@ -37,7 +37,7 @@
 
 <script>
 import DescriptionForm from './DescriptionForm'
-import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
 
 export default {
   name: "Modal",
@@ -48,22 +48,22 @@ export default {
     return {
       isDescriptionShow: true,
       isCardTitleShow: true,
-      modalTitle: this.card.newCard.cardTitle
+      modalTitle: this.card.cardTitle
     }
   },
   props: {
     card: Object
   },
   methods: {
-    ...mapMutations(["addDesc", "updateCardTitle"]),
+    ...mapActions(["addDesc", "updateCardTitle"]),
     addDescription(text) {
       if (text.length > 200) return alert("text is too large")
-      this.addDesc({idColumn: this.card.id, idCard: this.card.newCard.id, desc: text})
+      this.addDesc({columnId: this.card.columnId, id: this.card.id, description: text})
       this.isDescriptionShow = true
     },
     addNewTitle() {
       if (!this.modalTitle || this.modalTitle.length > 20) return;
-      this.updateCardTitle({idColumn: this.card.id, idCard: this.card.newCard.id, title: this.modalTitle})
+      this.updateCardTitle({columnId: this.card.columnId, id: this.card.id, cardTitle: this.modalTitle})
       this.isCardTitleShow = true
     }
   },

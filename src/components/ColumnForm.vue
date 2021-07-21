@@ -16,7 +16,7 @@
 
 
 <script>
-import {mapMutations} from "vuex";
+import {mapActions} from "vuex";
 import {Form, Field, ErrorMessage} from 'vee-validate'
 
 export default {
@@ -35,7 +35,7 @@ export default {
     isColumnShow: Boolean,
   },
   methods: {
-    ...mapMutations(["createColumn"]),
+    ...mapActions(["createColumn"]),
     clearTitle() {
       this.title = ''
     },
@@ -47,12 +47,7 @@ export default {
       return true
     },
     onSubmit() {
-      const newColumn = {
-        title: this.title,
-        id: new Date().getTime(),
-        cards: []
-      }
-      this.createColumn(newColumn)
+      this.createColumn(this.title)
       this.title = ''
       this.$emit('hideColumn')
     },
