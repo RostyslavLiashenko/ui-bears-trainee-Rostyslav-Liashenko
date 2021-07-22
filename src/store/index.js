@@ -2,7 +2,7 @@ import {createStore} from 'vuex'
 import axios from 'axios';
 
 const instance = axios.create({
-    baseURL: "https://tercsix9fk.execute-api.us-east-2.amazonaws.com/dev/",
+    baseURL: process.env.VUE_APP_API_URL
 })
 
 export default createStore({
@@ -15,25 +15,25 @@ export default createStore({
         }
     },
     actions: {
-        async getAllColumnsCards(ctx) {
+        async getAllColumnsCards({commit}) {
             const resCol = await instance.get('columns')
             const columns = await resCol.data.Items
             const resCard = await instance.get('cards')
             const cards = await resCard.data.Items
             if (resCol.status === 200 && resCard.status === 200) {
-                ctx.commit('updateColumns', {columns, cards})
+                commit('updateColumns', {columns, cards})
             }
         },
-        async createColumn(ctx, title) {
+        async createColumn({commit}, title) {
             const res = await instance.post('column', {
                 "title": title
             })
             const newColumn = await res.data.body
             if (res.status === 200) {
-                ctx.commit('createColumn', newColumn)
+                commit('createColumn', newColumn)
             }
         },
-        async removeColumn(ctx, id) {
+        async removeColumn({commit}, id) {
             const res = await instance.delete(`column/${id}`)
             this.state.myColumns.forEach(column => {
                 if (column.id === id) {
@@ -43,48 +43,48 @@ export default createStore({
                 }
             })
             if (res.status === 200) {
-                ctx.commit('removeColumn', id)
+                commit('removeColumn', id)
             }
         },
-        async updateColumnTitle(ctx, obj) {
+        async updateColumnTitle({commit}, obj) {
             const res = await instance.put(`column/${obj.id}`, {
                 "title": obj.title
             })
             if (res.status === 200) {
-                ctx.commit('updateTitle', obj)
+                commit('updateTitle', obj)
             }
         },
-        async createCard(ctx, obj) {
+        async createCard({commit}, obj) {
             const res = await instance.post('cards', {
                 columnId: obj.columnId,
                 cardTitle: obj.cardTitle
             })
             if (res.status === 200) {
-                ctx.commit('createCard', res.data.body)
+                commit('createCard', res.data.body)
             }
         },
-        async removeCard(ctx, obj) {
+        async removeCard({commit}, obj) {
             const res = await instance.delete(`card/${obj.id}`)
             if (res.status === 200) {
-                ctx.commit('removeCard', obj)
+                commit('removeCard', obj)
             }
         },
-        async updateCardTitle(ctx, obj) {
+        async updateCardTitle({commit}, obj) {
             const res = await instance.put(`card/${obj.id}`, {
                 "paramName": "cardTitle",
                 "paramValue": obj.cardTitle
             })
             if (res.status === 200) {
-                ctx.commit('updateCardTitle', obj)
+                commit('updateCardTitle', obj)
             }
         },
-        async addDesc(ctx, obj) {
+        async addDesc({commit}, obj) {
             const res = await instance.put(`card/${obj.id}`, {
                 "paramName": "description",
                 "paramValue": obj.description
             })
             if (res.status === 200) {
-                ctx.commit('addDesc', obj)
+                commit('addDesc', obj)
             }
         }
     },
