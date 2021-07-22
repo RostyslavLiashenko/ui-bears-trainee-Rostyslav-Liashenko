@@ -5,13 +5,17 @@
 </template>
 <script>
 import Column from "./Column";
-import {mapGetters} from 'vuex'
+import {mapGetters, mapActions} from 'vuex'
 export default {
   name: "Columns",
   components: {
     Column
   },
+  methods: mapActions(["getAllColumnsCards"]),
   computed: mapGetters(["allColumns"]),
+  mounted() {
+    this.getAllColumnsCards()
+  }
 }
 </script>
 

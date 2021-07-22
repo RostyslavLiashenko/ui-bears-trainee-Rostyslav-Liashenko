@@ -1,7 +1,7 @@
 <template>
   <div style="display: flex; align-items: center">
     <v-btn class="mt-1 mr-1 mb-1 ml-1 text-lowercase text-sm-body-1 card__btn" @click="modal=true">
-      {{card.newCard.cardTitle}}
+      {{card.cardTitle}}
     </v-btn>
     <v-btn icon="mdi-close" @click="deleteCard" color="white" variant="outlined" size="x-small" class="card__btn_delete"/>
     <Modal v-if="modal" @onModal="modalClose" v-click-outside="modalClose" :card="card"/>
@@ -10,7 +10,7 @@
 
 <script>
 import Modal from '../Modal/Modal'
-import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
 export default {
   name: "Card",
   components: {
@@ -25,12 +25,12 @@ export default {
     card: Object
   },
   methods: {
-    ...mapMutations(["removeCard"]),
+    ...mapActions(["removeCard"]),
     modalClose() {
       this.modal = false
     },
     deleteCard() {
-      this.removeCard({idColumn: this.card.id, idCard: this.card.newCard.id})
+      this.removeCard({columnId: this.card.columnId, id: this.card.id})
     }
   }
 }

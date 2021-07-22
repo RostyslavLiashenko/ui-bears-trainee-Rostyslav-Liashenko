@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import {mapMutations} from 'vuex'
+import {mapActions} from 'vuex'
 import Cards from './Cards/Cards'
 import CardForm from './Cards/CardForm'
 
@@ -43,24 +43,20 @@ export default {
     column: Object
   },
   methods: {
-    ...mapMutations(["updateTitle", "removeColumn", "createCard"]),
+    ...mapActions(["removeColumn", "updateColumnTitle", "createCard"]),
     addNewTitle() {
       if (!this.title || this.title.length > 20) return;
-      this.updateTitle({title: this.title, id: this.column.id})
+      this.updateColumnTitle({title: this.title, id: this.column.id})
       this.isTitleShow = true
     },
     deleteColumn() {
       let isDelete = confirm("Are you sure ?")
       if (isDelete) this.removeColumn(this.column.id)
     },
-    onSubmitCard(cardTitle1) {
-      if (!cardTitle1 || cardTitle1.length > 20) return null;
-      const newCard = {
-        cardTitle: cardTitle1,
-        id: new Date().getTime()
-      }
-      this.createCard({newCard: newCard, id: this.column.id})
-      cardTitle1 = ''
+    onSubmitCard(cardTitle) {
+      if (!cardTitle || cardTitle.length > 20) return null;
+      this.createCard({cardTitle, columnId: this.column.id})
+      cardTitle = ''
       this.isCardFormShow = false
     },
   },
