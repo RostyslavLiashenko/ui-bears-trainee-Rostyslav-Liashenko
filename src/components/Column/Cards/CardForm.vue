@@ -45,22 +45,27 @@ export default {
 .form__card {
   padding: 2px 5px 5px 10px;
 }
+
 .form__card__input {
   padding: 6px;
   border: 2px solid #fff;
   border-radius: 5px;
   color: #fff;
 }
-::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+
+::-webkit-input-placeholder {
   color: #f3faf7;
 }
-::-moz-placeholder { /* Firefox 19+ */
+
+::-moz-placeholder {
   color: #f3faf7;
 }
-:-ms-input-placeholder { /* IE 10+ */
+
+:-ms-input-placeholder {
   color: #f3faf7;
 }
-:-moz-placeholder { /* Firefox 18- */
+
+:-moz-placeholder {
   color: #f3faf7;
 }
 </style>

@@ -1,37 +1,73 @@
 <template>
-  <div class="columns__container">
-    <Column v-for="column in allColumns" :key="column.id" :column="column" />
-  </div>
+  <draggable
+      drag-class="chosen"
+      ghost-class="ghost"
+      class="d-flex"
+      v-model="columns"
+      group="columns_trello"
+      @start="drag=true"
+      @end="onDrag"
+      item-key="id"
+  >
+    <template #item="{element}">
+      <Column :column="element"/>
+    </template>
+  </draggable>
 </template>
 <script>
-import Column from "./Column";
+import Column from "./Column"
 import {mapGetters, mapActions} from 'vuex'
+import draggable from "vuedraggable";
+
 export default {
   name: "Columns",
   components: {
-    Column
+    Column, draggable
   },
-  methods: mapActions(["getAllColumnsCards"]),
-  computed: mapGetters(["allColumns"]),
-  mounted() {
-    this.getAllColumnsCards()
+  data() {
+    return {
+      drag: false,
+      columns: []
+    }
+  },
+  watch: {
+    allColumns() {
+      this.columns = this.allColumns
+    }
+  },
+  methods: {
+    ...mapActions(["getAllColumns", "getAllCards", "changeColOrder"]),
+    onDrag(e) {
+      this.drag = false
+      if (e.newIndex !== e.oldIndex) {
+        this.changeColOrder(e)
+      }
+    }
+  },
+  computed: mapGetters(["allColumns", "myCards"]),
+  async mounted() {
+    await this.getAllColumns()
+    await this.getAllCards()
+    this.columns = this.allColumns
   }
 }
 </script>
 
 <style>
-.columns__container {
-  overflow-x: auto;
-  overflow-y: hidden;
-  display: flex;
-  justify-content: flex-start;
-  padding-bottom: 20px;
+.chosen {
+  background: rgba(88, 138, 138, 0.78) !important;
 }
+
+.ghost {
+  transform: scale(1.03) !important;
+}
+
 ::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 9em;
   box-shadow: inset 1px 1px 10px #f3faf7;
 }
+
 ::-webkit-scrollbar {
   position: absolute;
   top: 0;
@@ -41,7 +77,9 @@ export default {
   background-color: #699;
   border-radius: 9em;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background-color: #699;
 }
+
 </style>

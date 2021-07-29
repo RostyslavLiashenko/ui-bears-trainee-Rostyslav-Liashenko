@@ -2,21 +2,23 @@
   <v-app>
     <Header/>
     <v-main class="main">
-      <div class="main__form">
+      <v-container class="mb-2 ml-0">
         <ColumnBtn :isColumnShow="isColumnShow" @showColumn="showColumn"/>
         <ColumnForm v-click-outside="hideColumn" v-if="isColumnShow" :isColumnShow="isColumnShow" @hideColumn="hideColumn"/>
-      </div>
-      <Columns />
+      </v-container>
+      <v-container class="pb-3 mr-0 ml-0">
+        <Columns/>
+      </v-container>
     </v-main>
     <Footer/>
   </v-app>
 </template>
 
 <script>
-import Footer from "./components/Footer";
+import Footer from "./components/Footer"
 import Header from './components/Header'
-import ColumnForm from "./components/ColumnForm";
-import ColumnBtn from "./components/ColumnBtn";
+import ColumnForm from "./components/ColumnForm"
+import ColumnBtn from "./components/ColumnBtn"
 import Columns from './components/Column/Columns'
 
 export default {
@@ -48,13 +50,12 @@ export default {
 html {
   overflow-y: auto;
 }
-.main__form {
-  margin-bottom: 30px;
-}
+
 .main {
   padding: 30px 0 10px 20px !important;
   background: url("assets/pexels-pok-rie-132037.jpg") no-repeat;
   background-size: cover;
   margin-bottom: 40px;
+  overflow-x: auto;
 }
 </style>
