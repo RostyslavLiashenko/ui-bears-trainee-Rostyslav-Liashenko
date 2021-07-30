@@ -124,13 +124,14 @@ export default {
             const {e} = obj
             let orderedCards = []
             state.myCards.forEach(card => {
-                if (card.columnId === columnId && card.orderCard > e.newIndex) {
-                    orderedCards.push({...card, orderCard: card.orderCard + 1})
-                } else if (card.id === e.element.id) {
+                if (card.id === e.element.id) {
                     orderedCards.push({...card, orderCard: e.newIndex + 1, columnId})
+                } else if (card.columnId === columnId && card.orderCard > e.newIndex) {
+                    orderedCards.push({...card, orderCard: card.orderCard + 1})
                 }
             })
             if (orderedCards.length) {
+                console.log('addCardToAnotherCol', orderedCards)
                 const res = await instance.put('card', {
                     "orderedCards": orderedCards
                 })
@@ -144,11 +145,12 @@ export default {
             commit('commonCardSpinner', {payload: true, columnId: e.element.columnId})
             let orderedCards = []
             state.myCards.forEach(card => {
-                if (e.element.columnId === card.columnId && card.orderCard > e.oldIndex) {
+                if (e.element.columnId === card.columnId && card.orderCard > e.oldIndex + 1) {
                     orderedCards.push({...card, orderCard: card.orderCard - 1})
                 }
             })
             if (orderedCards.length) {
+                console.log('remove', orderedCards)
                 const res = await instance.put('card', {
                     "orderedCards": orderedCards
                 })
@@ -230,7 +232,7 @@ export default {
         },
         changeCardOrderInCol(state, e) {
             state.myCards.forEach(card => {
-                if (e.element.columnId === card.columnId && card.orderCard > e.oldIndex) {
+                if (e.element.columnId === card.columnId && card.orderCard > e.oldIndex + 1) {
                     card.orderCard = card.orderCard - 1
                 }
             })

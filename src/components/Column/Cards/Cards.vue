@@ -52,6 +52,7 @@ export default {
     ...mapActions(["changeCardOrder", "addCardToAnotherCol", "changeCardOrderInCol"]),
     getCardsByColumnId,
     onChange(e, id) {
+      console.log(e)
       if (e.moved) {
         this.changeCardOrder(e.moved)
       }
