@@ -9,7 +9,7 @@
              @blur="addNewTitle"/>
     </div>
     <v-card-actions class="pt-0" v-if="!isCardFormShow">
-      <v-btn text class="text-md-body-2 text-lowercase" @click="isCardFormShow = true">
+      <v-btn :disabled="cardSpinner && getColumnIdSpinner === column.id" text class="text-md-body-2 text-lowercase" @click="isCardFormShow = true">
         Add card
         <v-icon size="x-small" class="ml-2" left>mdi-plus</v-icon>
       </v-btn>
@@ -21,6 +21,20 @@
               @closeCardForm="isCardFormShow = false"/>
     <div>
       <Cards v-if="myCards.length" :id="column.id" :title="column.title"/>
+      <v-progress-circular
+          v-if="cardSpinner && getColumnIdSpinner === column.id"
+          indeterminate
+          size="40"
+          color="white"
+          class="mt-1 mb-2" style="margin-left: 40% !important;"
+      />
+      <v-progress-circular
+          v-if="AllCardsSpinner"
+          indeterminate
+          size="40"
+          color="white"
+          class="mt-1 mb-2" style="margin-left: 40% !important;"
+      />
     </div>
   </v-card>
 </template>
@@ -47,7 +61,7 @@ export default {
   props: {
     column: Object
   },
-  computed: mapGetters(["myCards"]),
+  computed: mapGetters(["myCards", "cardSpinner", "getColumnIdSpinner", "AllCardsSpinner"]),
   methods: {
     ...mapActions(["removeColumn", "updateColumnTitle", "createCard", "removeCardFromCol", "updateOrderCol"]),
     addNewTitle() {
@@ -65,8 +79,10 @@ export default {
     },
     onCreateCard(cardTitle) {
       if (!cardTitle || cardTitle.length > 20) return null;
-      this.createCard({cardTitle, columnId: this.column.id,
-        orderCard: this.getCardsByColumnId(this.myCards, this.column.id).length ? this.getCardsByColumnId(this.myCards, this.column.id).length + 1 : 1})
+      this.createCard({
+        cardTitle, columnId: this.column.id,
+        orderCard: this.getCardsByColumnId(this.myCards, this.column.id).length ? this.getCardsByColumnId(this.myCards, this.column.id).length + 1 : 1
+      })
       cardTitle = ''
       this.isCardFormShow = false
     },

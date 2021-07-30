@@ -1,5 +1,6 @@
 <template>
   <draggable
+      :disabled="$store.state.showSpinner"
       drag-class="chosen"
       ghost-class="ghost"
       class="d-flex"

@@ -1,26 +1,36 @@
 import axios from "axios"
 
-
 const instance = axios.create({
     baseURL: process.env.VUE_APP_API_URL
 })
 
 export default {
     state: {
-        myCards: []
+        myCards: [],
+        commonCardSpinner: false,
+        columnIdSpinner: '',
+        modalCardSpinner: false,
+        getAllCardsSpinner: false
     },
     getters: {
         myCards: (state) => state.myCards,
+        cardSpinner: (state) => state.commonCardSpinner,
+        cardModalSpinner: (state) => state.modalCardSpinner,
+        getColumnIdSpinner: (state) => state.columnIdSpinner,
+        AllCardsSpinner: (state) => state.getAllCardsSpinner
     },
     actions: {
         async getAllCards({commit}) {
+            commit('AllCardsSpinner', true)
             const res = await instance.get('cards')
             const cards = await res.data.Items
             if (res.status === 200) {
                 commit('updateCards', cards)
             }
+            commit('AllCardsSpinner', false)
         },
         async createCard({commit}, obj) {
+            commit('commonCardSpinner', {payload: true, columnId: obj.columnId})
             const res = await instance.post('cards', {
                 "columnId": obj.columnId,
                 "cardTitle": obj.cardTitle,
@@ -29,12 +39,16 @@ export default {
             if (res.status === 200) {
                 commit('createCard', res.data.body)
             }
+            commit('commonCardSpinner', {payload: false, columnId: ''})
         },
-        async removeCard({commit}, id) {
+        async removeCard({commit}, obj) {
+            commit('commonCardSpinner', {payload: true, columnId: obj.columnId})
+            const {id} = obj
             const res = await instance.delete(`card/${id}`)
             if (res.status === 200) {
                 commit('removeCard', id)
             }
+            commit('commonCardSpinner', {payload: false, columnId: ''})
         },
         async updateOrderCard({commit, state}, obj) {
             let orderedCards = []
@@ -61,6 +75,7 @@ export default {
             })
         },
         async updateCardTitle({commit}, obj) {
+            commit('modalCardSpinner', true)
             const res = await instance.put(`card/${obj.id}`, {
                 "paramName": "cardTitle",
                 "paramValue": obj.cardTitle
@@ -68,8 +83,10 @@ export default {
             if (res.status === 200) {
                 commit('updateCardTitle', obj)
             }
+            commit('modalCardSpinner', false)
         },
         async addDesc({commit}, obj) {
+            commit('modalCardSpinner', true)
             const res = await instance.put(`card/${obj.id}`, {
                 "paramName": "description",
                 "paramValue": obj.description
@@ -77,8 +94,10 @@ export default {
             if (res.status === 200) {
                 commit('addDesc', obj)
             }
+            commit('modalCardSpinner', false)
         },
         async changeCardOrder({commit, state}, e) {
+            commit('commonCardSpinner', {payload: true, columnId: e.element.columnId})
             let orderedCards = []
             state.myCards.forEach(card => {
                 if (card.columnId === e.element.columnId) {
@@ -97,10 +116,12 @@ export default {
             if (res.status === 200) {
                 commit('changeCardOrder', e)
             }
+            commit('commonCardSpinner', {payload: false, columnId: ''})
         },
         async addCardToAnotherCol({commit, state}, obj) {
-            const {e} = obj
             const {columnId} = obj
+            commit('commonCardSpinner', {payload: true, columnId})
+            const {e} = obj
             let orderedCards = []
             state.myCards.forEach(card => {
                 if (card.columnId === columnId && card.orderCard > e.newIndex) {
@@ -117,8 +138,10 @@ export default {
                     commit('addCardToAnotherCol', obj)
                 }
             }
+            commit('commonCardSpinner', {payload: false, columnId: ''})
         },
         async changeCardOrderInCol({commit, state}, e) {
+            commit('commonCardSpinner', {payload: true, columnId: e.element.columnId})
             let orderedCards = []
             state.myCards.forEach(card => {
                 if (e.element.columnId === card.columnId && card.orderCard > e.oldIndex) {
@@ -133,9 +156,20 @@ export default {
                     commit('changeCardOrderInCol', e)
                 }
             }
+            commit('commonCardSpinner', {payload: false, columnId: ''})
         }
     },
     mutations: {
+        commonCardSpinner(state, obj) {
+            state.commonCardSpinner = obj.payload
+            state.columnIdSpinner = obj.columnId
+        },
+        modalCardSpinner(state, payload) {
+            state.modalCardSpinner = payload
+        },
+        AllCardsSpinner(state, payload) {
+            state.getAllCardsSpinner = payload
+        },
         updateCards(state, cards) {
             state.myCards = cards.sort((a, b) => {
                 return a.orderCard - b.orderCard

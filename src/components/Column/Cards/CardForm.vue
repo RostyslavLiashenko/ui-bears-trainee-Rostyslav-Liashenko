@@ -1,5 +1,5 @@
 <template>
-  <Form @submit="addCard" class="form__card">
+  <Form @submit="$emit('onSubmitCard', cardTitle)" class="form__card">
     <Field v-focus name="cardTitle" class="form__card__input" placeholder="type a title" v-model="cardTitle"/>
     <v-btn text class="text-md-body-2 text-lowercase mr-5 mt-2 pr-2" type="submit">
       new card
@@ -25,11 +25,6 @@ export default {
   },
   props: {
     isCardFormShow: Boolean
-  },
-  methods: {
-    addCard() {
-      this.$emit('onSubmitCard', this.cardTitle)
-    }
   },
   directives: {
     focus: {

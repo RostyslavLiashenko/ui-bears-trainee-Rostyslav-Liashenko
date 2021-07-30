@@ -32,7 +32,7 @@ export default {
       this.modal = false
     },
     deleteCard() {
-      this.removeCard(this.card.id)
+      this.removeCard({id: this.card.id, columnId: this.card.columnId})
       this.updateOrderCard({columnId: this.card.columnId, orderCard: this.card.orderCard})
     }
   }

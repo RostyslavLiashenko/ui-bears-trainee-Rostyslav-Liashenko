@@ -1,11 +1,18 @@
 <template>
   <v-card class="modal">
+    <div class="modal__spinner" v-if="cardModalSpinner">
+    <v-progress-circular
+        indeterminate
+        size="40"
+        color="white"
+    />
+    </div>
     <v-card-title v-if="isCardTitleShow" class="text-h5 grey lighten-2 mb-2 modal__title"
                   @click="isCardTitleShow = false">
       {{ card.cardTitle }}
     </v-card-title>
     <input class="modal__input__title" v-focus v-else-if="!isCardTitleShow" v-model="modalTitle" type="text"
-           @blur="addNewTitle"/>
+           @blur="addNewTitle" :disabled="cardModalSpinner"/>
 
     <template v-if="isDescriptionShow">
       <v-card-header>
@@ -15,7 +22,7 @@
         {{ card.description }}
       </v-card-text>
       <v-container class="flex-row">
-        <v-btn size="x-small" icon color="#699" @click="isDescriptionShow=false">
+        <v-btn size="x-small" icon color="#699" @click="isDescriptionShow=false" :disabled="cardModalSpinner">
           <v-icon>mdi-pencil</v-icon>
         </v-btn>
       </v-container>
@@ -40,7 +47,7 @@
 
 <script>
 import DescriptionForm from './DescriptionForm'
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 
 export default {
   name: "Modal",
@@ -57,6 +64,7 @@ export default {
   props: {
     card: Object
   },
+  computed: mapGetters(['cardModalSpinner']),
   methods: {
     ...mapActions(["addDesc", "updateCardTitle"]),
     addDescription(text) {
@@ -81,6 +89,20 @@ export default {
 </script>
 
 <style scoped>
+.modal__spinner {
+  width: 400px;
+  height: 241px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #666;
+  opacity: 0.5;
+  z-index: 2;
+}
+.v-progress-circular {
+  top: 40%;
+  left: 45%;
+}
 .modal {
   width: 400px;
   z-index: 10;
