@@ -44,6 +44,7 @@ export default {
   left: 37%;
   cursor: pointer;
 }
+
 .trello__text:hover {
   color: #333 !important;
 }

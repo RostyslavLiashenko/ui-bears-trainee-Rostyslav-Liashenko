@@ -20,9 +20,12 @@
         </v-btn>
       </v-container>
     </template>
-    <DescriptionForm v-else-if="!isDescriptionShow" :desc="card.description"
-                     @closeDescForm="isDescriptionShow=true"
-                     @addDescription="addDescription"/>
+    <DescriptionForm
+        v-else-if="!isDescriptionShow"
+        :desc="card.description"
+        @closeDescForm="isDescriptionShow=true"
+        @addDescription="addDescription"
+    />
 
     <v-divider></v-divider>
 
@@ -58,12 +61,12 @@ export default {
     ...mapActions(["addDesc", "updateCardTitle"]),
     addDescription(text) {
       if (text.length > 200) return alert("text is too large")
-      this.addDesc({columnId: this.card.columnId, id: this.card.id, description: text})
+      this.addDesc({id: this.card.id, description: text})
       this.isDescriptionShow = true
     },
     addNewTitle() {
       if (!this.modalTitle || this.modalTitle.length > 20) return;
-      this.updateCardTitle({columnId: this.card.columnId, id: this.card.id, cardTitle: this.modalTitle})
+      this.updateCardTitle({id: this.card.id, cardTitle: this.modalTitle})
       this.isCardTitleShow = true
     }
   },

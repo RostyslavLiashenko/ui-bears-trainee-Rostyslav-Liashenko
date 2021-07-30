@@ -1,10 +1,12 @@
 <template>
   <v-card width="240" min-width="240" color="#699" class="mr-3 d-inline-block" style="height: fit-content;">
     <div class="title__container">
-      <v-card-title class="text-md-body-1 pb-0 text-break" style="cursor: pointer;" v-if="isTitleShow" @click="isTitleShow = false">
+      <v-card-title class="text-sm-body-1 pb-0 text-break" style="cursor: pointer;" v-if="isTitleShow"
+                    @click="isTitleShow = false">
         {{ column.title }}
       </v-card-title>
-      <input class="title__container__input" v-focus v-else-if="!isTitleShow" v-model="title" type="text" @blur="addNewTitle"/>
+      <input class="title__container__input" v-focus v-else-if="!isTitleShow" v-model="title" type="text"
+             @blur="addNewTitle"/>
     </div>
     <v-card-actions class="pt-0" v-if="!isCardFormShow">
       <v-btn text class="text-md-body-2 text-lowercase" @click="isCardFormShow = true">
@@ -15,16 +17,19 @@
     </v-card-actions>
     <CardForm v-else-if="isCardFormShow"
               :isCardFormShow="isCardFormShow"
-              @onSubmitCard="onSubmitCard"
+              @onSubmitCard="onCreateCard"
               @closeCardForm="isCardFormShow = false"/>
-    <Cards :cards="column.cards"/>
+    <div>
+      <Cards v-if="myCards.length" :id="column.id" :title="column.title"/>
+    </div>
   </v-card>
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapActions, mapGetters} from 'vuex'
 import Cards from './Cards/Cards'
 import CardForm from './Cards/CardForm'
+import {getCardsByColumnId} from "../../helpers/helpers";
 
 export default {
   name: "Column",
@@ -42,8 +47,9 @@ export default {
   props: {
     column: Object
   },
+  computed: mapGetters(["myCards"]),
   methods: {
-    ...mapActions(["removeColumn", "updateColumnTitle", "createCard"]),
+    ...mapActions(["removeColumn", "updateColumnTitle", "createCard", "removeCardFromCol", "updateOrderCol"]),
     addNewTitle() {
       if (!this.title || this.title.length > 20) return;
       this.updateColumnTitle({title: this.title, id: this.column.id})
@@ -51,14 +57,20 @@ export default {
     },
     deleteColumn() {
       let isDelete = confirm("Are you sure ?")
-      if (isDelete) this.removeColumn(this.column.id)
+      if (isDelete) {
+        this.removeColumn(this.column.id)
+        this.removeCardFromCol(this.column.id)
+        this.updateOrderCol(this.column.orderCol)
+      }
     },
-    onSubmitCard(cardTitle) {
+    onCreateCard(cardTitle) {
       if (!cardTitle || cardTitle.length > 20) return null;
-      this.createCard({cardTitle, columnId: this.column.id})
+      this.createCard({cardTitle, columnId: this.column.id,
+        orderCard: this.getCardsByColumnId(this.myCards, this.column.id).length ? this.getCardsByColumnId(this.myCards, this.column.id).length + 1 : 1})
       cardTitle = ''
       this.isCardFormShow = false
     },
+    getCardsByColumnId,
   },
   directives: {
     focus: {
@@ -77,10 +89,11 @@ export default {
   border: 2px solid red;
   border-radius: 5px;
 }
+
 .title__container {
   border: 2px solid darkkhaki;
   border-radius: 5px 5px 0 0;
-  background: rgba(249,255,250,0.88);
+  background: rgba(249, 255, 250, 0.88);
   color: #333;
   margin-bottom: 5px;
 }
