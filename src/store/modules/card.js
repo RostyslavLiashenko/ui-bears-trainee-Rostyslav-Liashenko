@@ -131,7 +131,6 @@ export default {
                 }
             })
             if (orderedCards.length) {
-                console.log('addCardToAnotherCol', orderedCards)
                 const res = await instance.put('card', {
                     "orderedCards": orderedCards
                 })
@@ -150,7 +149,6 @@ export default {
                 }
             })
             if (orderedCards.length) {
-                console.log('remove', orderedCards)
                 const res = await instance.put('card', {
                     "orderedCards": orderedCards
                 })

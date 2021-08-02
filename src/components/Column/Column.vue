@@ -5,8 +5,7 @@
                     @click="isTitleShow = false">
         {{ column.title }}
       </v-card-title>
-      <input class="title__container__input" v-focus v-else-if="!isTitleShow" v-model="title" type="text"
-             @blur="addNewTitle"/>
+      <input class="title__container__input" v-focus v-else-if="!isTitleShow" v-model="title" type="text" @blur="addNewTitle"/>
     </div>
     <v-card-actions class="pt-0" v-if="!isCardFormShow">
       <v-btn :disabled="cardSpinner && getColumnIdSpinner === column.id" text class="text-md-body-2 text-lowercase" @click="isCardFormShow = true">
@@ -15,10 +14,11 @@
       </v-btn>
       <v-btn color="error" class="ml-7" icon="mdi-delete" size="x-small" @click="deleteColumn"/>
     </v-card-actions>
-    <CardForm v-else-if="isCardFormShow"
-              :isCardFormShow="isCardFormShow"
-              @onSubmitCard="onCreateCard"
-              @closeCardForm="isCardFormShow = false"/>
+    <CardForm
+        v-else
+        @onSubmitCard="onCreateCard"
+        @closeCardForm="isCardFormShow = false"
+    />
     <div>
       <Cards v-if="myCards.length" :id="column.id" :title="column.title"/>
       <v-progress-circular
@@ -87,13 +87,6 @@ export default {
       this.isCardFormShow = false
     },
     getCardsByColumnId,
-  },
-  directives: {
-    focus: {
-      mounted(el) {
-        el.focus()
-      }
-    }
   },
 }
 </script>

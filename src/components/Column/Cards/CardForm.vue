@@ -23,16 +23,6 @@ export default {
       cardTitle: ''
     }
   },
-  props: {
-    isCardFormShow: Boolean
-  },
-  directives: {
-    focus: {
-      mounted(el) {
-        el.focus()
-      }
-    }
-  }
 }
 </script>
 

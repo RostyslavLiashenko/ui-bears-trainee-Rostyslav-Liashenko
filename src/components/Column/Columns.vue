@@ -1,6 +1,6 @@
 <template>
   <draggable
-      :disabled="$store.state.showSpinner"
+      :disabled="colSpinner"
       drag-class="chosen"
       ghost-class="ghost"
       class="d-flex"
@@ -45,7 +45,7 @@ export default {
       }
     }
   },
-  computed: mapGetters(["allColumns", "myCards"]),
+  computed: mapGetters(["allColumns", "myCards", "colSpinner"]),
   async mounted() {
     await this.getAllColumns()
     await this.getAllCards()

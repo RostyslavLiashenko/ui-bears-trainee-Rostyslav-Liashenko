@@ -1,8 +1,10 @@
 <template>
-  <v-btn :disabled="colSpinner"
-         v-show="!isColumnShow" @click="$emit('showColumn')"
-         class="text-xl-subtitle-2 btn_create" variant="outlined"
-         color="white">
+  <v-btn
+      :disabled="colSpinner"
+      @click="$emit('showColumn')"
+      class="text-xl-subtitle-2 btn_create" variant="outlined"
+      color="white"
+  >
     add new column
   </v-btn>
 </template>
@@ -12,9 +14,6 @@ import {mapGetters} from "vuex";
 
 export default {
   name: "ColumnBtn",
-  props: {
-    isColumnShow: Boolean
-  },
   computed: mapGetters(['colSpinner'])
 }
 </script>

@@ -3,11 +3,12 @@
     <Header/>
     <v-main class="main">
       <v-container class="mb-2 ml-0">
-        <ColumnBtn :isColumnShow="isColumnShow" @showColumn="showColumn"/>
-        <ColumnForm v-click-outside="hideColumn"
-                    v-if="isColumnShow"
-                    :isColumnShow="isColumnShow"
-                    @hideColumn="hideColumn"/>
+        <ColumnBtn v-if="!isColumnShow" @showColumn="showColumn"/>
+        <ColumnForm
+            v-click-outside="hideColumn"
+            v-else
+            @hideColumn="hideColumn"
+        />
       </v-container>
       <v-container class="pb-3 mr-0 ml-0 d-flex">
         <Columns/>
