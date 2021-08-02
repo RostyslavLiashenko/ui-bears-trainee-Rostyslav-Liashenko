@@ -8,8 +8,7 @@
         <v-btn type="submit" flat color="#699" class="text-white mr-2 mt-2">
           Add new list
         </v-btn>
-        <v-btn color="error" class="mt-2" icon="mdi-delete" size="x-small"
-               @click.stop="$emit('hideColumn'); clearTitle()"/>
+        <v-btn color="error" class="mt-2" icon="mdi-delete" size="x-small" @click="hideColumnForm"/>
       </div>
     </div>
   </Form>
@@ -31,12 +30,10 @@ export default {
       title: ''
     }
   },
-  props: {
-    isColumnShow: Boolean,
-  },
   methods: {
     ...mapActions(["createColumn"]),
-    clearTitle() {
+    hideColumnForm() {
+      this.$emit('hideColumn')
       this.title = ''
     },
     validateForm(value) {
@@ -50,13 +47,6 @@ export default {
       this.createColumn(this.title)
       this.title = ''
       this.$emit('hideColumn')
-    },
-    directives: {
-      focus: {
-        mounted(el) {
-          el.focus()
-        }
-      }
     },
   }
 }

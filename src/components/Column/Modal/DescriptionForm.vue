@@ -25,13 +25,6 @@ export default {
   },
   props: {
     desc: String
-  },
-  directives: {
-    focus: {
-      mounted(el) {
-        el.focus()
-      }
-    }
   }
 }
 </script>

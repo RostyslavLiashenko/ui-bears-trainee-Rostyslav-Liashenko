@@ -78,13 +78,6 @@ export default {
       this.isCardTitleShow = true
     }
   },
-  directives: {
-    focus: {
-      mounted(el) {
-        el.focus()
-      }
-    }
-  }
 }
 </script>
 
