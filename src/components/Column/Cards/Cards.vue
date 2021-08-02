@@ -1,5 +1,6 @@
 <template>
   <draggable
+      :disabled="cardSpinner"
       ghost-class="ghost__card"
       v-model="cards"
       group="cards_trello"
@@ -42,7 +43,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(["myCards"]),
+    ...mapGetters(["myCards", "cardSpinner"]),
   },
   mounted() {
     this.cards = this.getCardsByColumnId(this.myCards, this.id)
@@ -51,6 +52,7 @@ export default {
     ...mapActions(["changeCardOrder", "addCardToAnotherCol", "changeCardOrderInCol"]),
     getCardsByColumnId,
     onChange(e, id) {
+      console.log(e)
       if (e.moved) {
         this.changeCardOrder(e.moved)
       }

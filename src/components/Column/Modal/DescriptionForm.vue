@@ -38,6 +38,7 @@ export default {
 
 <style scoped>
 .form__descrip {
+  margin-top: 30px;
   padding: 2px 5px 5px 10px;
   display: grid;
   grid-template-rows: 50px 60px;
