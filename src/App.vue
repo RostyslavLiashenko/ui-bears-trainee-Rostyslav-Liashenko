@@ -12,13 +12,7 @@
       </v-container>
       <v-container class="pb-3 mr-0 ml-0 d-flex">
         <Columns/>
-        <v-progress-circular
-            v-if="colSpinner"
-            indeterminate
-            size="50"
-            color="white"
-            class="ml-3 mt-6"
-        />
+        <Spinner v-if="colSpinner" prop-size="50" prop-class="ml-3 mt-6"/>
       </v-container>
     </v-main>
     <Footer/>
@@ -32,6 +26,7 @@ import ColumnForm from "./components/ColumnForm"
 import ColumnBtn from "./components/ColumnBtn"
 import Columns from './components/Column/Columns'
 import {mapGetters} from "vuex";
+import Spinner from "./components/Spinner/Spinner";
 
 export default {
   name: 'App',
@@ -40,7 +35,8 @@ export default {
     Header,
     ColumnForm,
     ColumnBtn,
-    Columns
+    Columns,
+    Spinner
   },
   data() {
     return {
