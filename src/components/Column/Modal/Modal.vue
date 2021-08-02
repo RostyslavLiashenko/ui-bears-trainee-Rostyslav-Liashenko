@@ -1,11 +1,7 @@
 <template>
   <v-card class="modal">
     <div class="modal__spinner" v-if="cardModalSpinner">
-    <v-progress-circular
-        indeterminate
-        size="40"
-        color="white"
-    />
+      <Spinner prop-size="40"/>
     </div>
     <v-card-title v-if="isCardTitleShow" class="text-h5 grey lighten-2 mb-2 modal__title"
                   @click="isCardTitleShow = false">
@@ -48,11 +44,12 @@
 <script>
 import DescriptionForm from './DescriptionForm'
 import {mapActions, mapGetters} from 'vuex'
+import Spinner from "../../Spinner/Spinner";
 
 export default {
   name: "Modal",
   components: {
-    DescriptionForm
+    DescriptionForm, Spinner
   },
   data() {
     return {

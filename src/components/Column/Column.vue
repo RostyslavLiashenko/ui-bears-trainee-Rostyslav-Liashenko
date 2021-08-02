@@ -14,26 +14,20 @@
       </v-btn>
       <v-btn color="error" class="ml-7" icon="mdi-delete" size="x-small" @click="deleteColumn"/>
     </v-card-actions>
-    <CardForm
-        v-else
-        @onSubmitCard="onCreateCard"
-        @closeCardForm="isCardFormShow = false"
-    />
+    <CardForm v-else @onSubmitCard="onCreateCard" @closeCardForm="isCardFormShow = false"/>
     <div>
       <Cards v-if="myCards.length" :id="column.id" :title="column.title"/>
-      <v-progress-circular
+      <Spinner
           v-if="cardSpinner && getColumnIdSpinner === column.id"
-          indeterminate
-          size="40"
-          color="white"
-          class="mt-1 mb-2" style="margin-left: 40% !important;"
+          prop-size="40"
+          prop-class="mt-1 mb-2"
+          prop-style="margin-left: 40% !important;"
       />
-      <v-progress-circular
+      <Spinner
           v-if="AllCardsSpinner"
-          indeterminate
-          size="40"
-          color="white"
-          class="mt-1 mb-2" style="margin-left: 40% !important;"
+          prop-size="40"
+          prop-class="mt-1 mb-2"
+          prop-style="margin-left: 40% !important;"
       />
     </div>
   </v-card>
@@ -44,12 +38,12 @@ import {mapActions, mapGetters} from 'vuex'
 import Cards from './Cards/Cards'
 import CardForm from './Cards/CardForm'
 import {getCardsByColumnId} from "../../helpers/helpers";
+import Spinner from "../Spinner/Spinner";
 
 export default {
   name: "Column",
   components: {
-    Cards,
-    CardForm
+    Cards, CardForm, Spinner
   },
   data() {
     return {
