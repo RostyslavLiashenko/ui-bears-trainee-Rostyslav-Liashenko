@@ -56,7 +56,9 @@ export default {
         this.changeCardOrder(e.moved)
       }
       if (e.added) {
-        this.addCardToAnotherCol({e: e.added, columnId: id})
+        setTimeout(() => {
+          this.addCardToAnotherCol({e: e.added, columnId: id})
+        }, 200)
       }
       if (e.removed) {
         this.changeCardOrderInCol(e.removed)

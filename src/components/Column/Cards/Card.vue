@@ -5,7 +5,7 @@
     </v-btn>
     <v-btn icon="mdi-close" @click="deleteCard" color="white" variant="outlined" size="x-small"
            class="card__btn_delete"/>
-    <Modal v-if="modal" @onModal="modalClose" v-click-outside="modalClose" :card="card"/>
+    <Modal v-if="modal" @onModal="modal=false" :card="card" @closeModal="modal=false"/>
   </div>
 </template>
 
@@ -28,9 +28,6 @@ export default {
   },
   methods: {
     ...mapActions(["removeCard", "updateOrderCard"]),
-    modalClose() {
-      this.modal = false
-    },
     deleteCard() {
       this.removeCard({id: this.card.id, columnId: this.card.columnId})
       this.updateOrderCard({columnId: this.card.columnId, orderCard: this.card.orderCard})

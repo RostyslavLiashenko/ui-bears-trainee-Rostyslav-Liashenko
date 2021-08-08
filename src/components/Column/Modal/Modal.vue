@@ -1,44 +1,47 @@
 <template>
-  <v-card class="modal">
-    <div class="modal__spinner" v-if="cardModalSpinner">
-      <Spinner prop-size="40"/>
-    </div>
-    <v-card-title v-if="isCardTitleShow" class="text-h5 grey lighten-2 mb-2 modal__title"
-                  @click="isCardTitleShow = false">
-      {{ card.cardTitle }}
-    </v-card-title>
-    <input class="modal__input__title" v-focus v-else-if="!isCardTitleShow" v-model="modalTitle" type="text"
-           @blur="addNewTitle" :disabled="cardModalSpinner"/>
+  <div class="modal-wrapper">
+    <v-card class="modal">
+      <div class="modal__spinner" v-if="cardModalSpinner">
+        <Spinner prop-size="40"/>
+      </div>
+      <v-card-title v-if="isCardTitleShow" class="text-h5 grey lighten-2 mb-2 modal__title"
+                    @click="isCardTitleShow = false">
+        {{ card.cardTitle }}
+      </v-card-title>
+      <input class="modal__input__title" v-focus v-else-if="!isCardTitleShow" v-model="modalTitle" type="text"
+             @blur="addNewTitle" :disabled="cardModalSpinner"/>
 
-    <template v-if="isDescriptionShow">
-      <v-card-header>
-        Card description:
-      </v-card-header>
-      <v-card-text class="text-break text-md-body-2 pt-1" max-width="200">
-        {{ card.description }}
-      </v-card-text>
-      <v-container class="flex-row">
-        <v-btn size="x-small" icon color="#699" @click="isDescriptionShow=false" :disabled="cardModalSpinner">
-          <v-icon>mdi-pencil</v-icon>
+      <template v-if="isDescriptionShow">
+        <v-card-header>
+          Card description:
+        </v-card-header>
+        <v-card-text class="text-break text-md-body-1 pt-1" max-width="200">
+          {{ card.description }}
+        </v-card-text>
+        <v-container class="flex-row">
+          <v-btn size="x-small" icon color="#699" @click="isDescriptionShow=false" :disabled="cardModalSpinner">
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
+        </v-container>
+      </template>
+      <DescriptionForm
+          v-else-if="!isDescriptionShow"
+          :desc="card.description"
+          @closeDescForm="isDescriptionShow=true"
+          @addDescription="addDescription"
+      />
+
+      <v-divider></v-divider>
+
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="error" text @click="$emit('onModal')">
+          close
         </v-btn>
-      </v-container>
-    </template>
-    <DescriptionForm
-        v-else-if="!isDescriptionShow"
-        :desc="card.description"
-        @closeDescForm="isDescriptionShow=true"
-        @addDescription="addDescription"
-    />
-
-    <v-divider></v-divider>
-
-    <v-card-actions>
-      <v-spacer></v-spacer>
-      <v-btn color="error" text @click="$emit('onModal')">
-        close
-      </v-btn>
-    </v-card-actions>
-  </v-card>
+      </v-card-actions>
+    </v-card>
+    <div class="overlay" @click="$emit('closeModal')"></div>
+  </div>
 </template>
 
 <script>
@@ -55,7 +58,7 @@ export default {
     return {
       isDescriptionShow: true,
       isCardTitleShow: true,
-      modalTitle: this.card.cardTitle
+      modalTitle: this.card.cardTitle,
     }
   },
   props: {
@@ -79,26 +82,30 @@ export default {
 </script>
 
 <style scoped>
-.modal__spinner {
-  width: 400px;
-  height: 241px;
-  position: absolute;
+.modal-wrapper {
+  position: fixed;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, .7);
+  z-index: 100;
   top: 0;
   left: 0;
-  background: #666;
-  opacity: 0.5;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: 100%;
   z-index: 2;
 }
-.v-progress-circular {
-  top: 40%;
-  left: 45%;
-}
+
 .modal {
   width: 400px;
-  z-index: 10;
-  position: fixed;
-  left: 35%;
-  top: 30%;
+  z-index: 5;
+  min-height: 250px;
 }
 
 .modal__title {
@@ -116,5 +123,21 @@ export default {
   width: 100%;
   max-width: 380px;
   border-radius: 5px;
+}
+
+.modal__spinner {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #666;
+  opacity: 0.5;
+  z-index: 2;
+}
+
+.v-progress-circular {
+  top: 40%;
+  left: 45%;
 }
 </style>

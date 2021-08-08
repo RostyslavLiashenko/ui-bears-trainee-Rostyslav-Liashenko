@@ -1,14 +1,16 @@
 <template>
   <draggable
-      :disabled="colSpinner"
       drag-class="chosen"
       ghost-class="ghost"
+      :disabled="colSpinner"
       class="d-flex"
       v-model="columns"
       group="columns_trello"
       @start="drag=true"
       @end="onDrag"
       item-key="id"
+      tag="transition-group"
+      :component-data="{name:'fade'}"
   >
     <template #item="{element}">
       <Column :column="element"/>
@@ -58,9 +60,21 @@ export default {
 .chosen {
   background: rgba(88, 138, 138, 0.78) !important;
 }
-
 .ghost {
   transform: scale(1.03) !important;
+}
+
+.fade-enter-active {
+  transition: all 0.4s ease-out;
+}
+.fade-leave-active {
+  transition: all 0.6s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  transform: translateX(20px);
+  opacity: 0;
 }
 
 ::-webkit-scrollbar-thumb {

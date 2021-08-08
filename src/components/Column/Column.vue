@@ -58,6 +58,7 @@ export default {
   computed: mapGetters(["myCards", "cardSpinner", "getColumnIdSpinner", "AllCardsSpinner"]),
   methods: {
     ...mapActions(["removeColumn", "updateColumnTitle", "createCard", "removeCardFromCol", "updateOrderCol"]),
+    getCardsByColumnId,
     addNewTitle() {
       if (!this.title || this.title.length > 20) return;
       this.updateColumnTitle({title: this.title, id: this.column.id})
@@ -80,7 +81,6 @@ export default {
       cardTitle = ''
       this.isCardFormShow = false
     },
-    getCardsByColumnId,
   },
 }
 </script>
