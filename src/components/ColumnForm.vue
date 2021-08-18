@@ -37,10 +37,10 @@ export default {
       this.title = ''
     },
     validateForm(value) {
-      if (!value) {
+      if (!value.trim()) {
         return 'This field is required';
       }
-      if (value.length > 20) return 'Must include 20 symbols max'
+      if (value.trim().length > 20) return 'Must include 20 symbols max'
       return true
     },
     onSubmit() {

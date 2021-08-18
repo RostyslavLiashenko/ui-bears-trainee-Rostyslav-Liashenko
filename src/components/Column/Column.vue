@@ -73,7 +73,7 @@ export default {
       }
     },
     onCreateCard(cardTitle) {
-      if (!cardTitle || cardTitle.length > 20) return null;
+      if (!cardTitle.trim() || cardTitle.trim().length > 20) return null;
       this.createCard({
         cardTitle, columnId: this.column.id,
         orderCard: this.getCardsByColumnId(this.myCards, this.column.id).length ? this.getCardsByColumnId(this.myCards, this.column.id).length + 1 : 1
